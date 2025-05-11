@@ -1,7 +1,15 @@
 {
-  "orgName": "amitsingh company",
-  "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "orgName": "PantherSchools Company",
+  "edition": "Enterprise",
+  "hasSampleData": true,
+  "adminEmail": "email.PantherSchools@gmail.com",
+  "username": "email.PantherSchools@gmail.com.scratch2025",
+  "features": [
+    "EnableSetPasswordInApi",
+    "Communities",
+    "ContactsToMultipleAccounts",
+    "Knowledge"
+  ],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
