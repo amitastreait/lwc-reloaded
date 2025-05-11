@@ -1,0 +1,17 @@
+<template>
+    <lightning-card  variant="Narrow" title="Decorators in LWC" icon-name="custom:custom34">
+        <div class="slds-p-around_large">
+            <lightning-button variant="success" label="Change User Info" onclick={handleChangeUserInfo}></lightning-button>
+            <div if:true={user}>
+                {user.Name}<br/>
+                <div if:true={user.address}>
+                    {user.address.city}<br/>
+                    <p if:true={user.address.country}>
+                       {user.address.country.name} {user.address.country.code}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">Decorators in LWC</div>
+    </lightning-card>
+</template>

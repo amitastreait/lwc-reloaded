@@ -24,7 +24,11 @@ export default class Calculator extends LightningElement {
     }
 
     hanleSubstract(){
-        this.result = this.number1 - this.number2;
+        if(this.number1 && this.number2){
+            this.result = this.number1 - this.number2;
+        } else {
+            alert('Please enter both the numbers');
+        }
     }
 
     hanleMultiply(){
