@@ -1,0 +1,25 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Calculator" icon-name="utility:formula">
+        <div if:true={result} class="slds-p-around_large">
+            <h1>The result is: {result}</h1>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-input onchange={numbe1Change} type="number" variant="standard" name="Number1" label="Number 1" 
+                placeholder="type here...">
+            </lightning-input>
+            <lightning-input onchange={number2Change} type="number" variant="standard" name="Number2" label="Number 2"
+                placeholder="type here...">
+            </lightning-input>
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-button variant="neutral" label="Add" title="Add" onclick={hanleAdd}></lightning-button>
+            &nbsp; &nbsp;
+            <lightning-button variant="brand" label="Substract" title="Substract" onclick={hanleSubstract}></lightning-button>
+            &nbsp; &nbsp;
+            <lightning-button variant="neutral" label="Multiply" title="Multiply" onclick={hanleMultiply}></lightning-button>
+            &nbsp; &nbsp;
+            <lightning-button variant="brand" label="Devide" title="Devide" onclick={hanleDevide}></lightning-button>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

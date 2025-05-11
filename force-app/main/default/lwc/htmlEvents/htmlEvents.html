@@ -1,0 +1,16 @@
+<template>
+    <div>
+        <h1> HTML Events </h1>
+        <div>
+            <lightning-input onchange={handleNameChange} type="text" label="First Name"></lightning-input>
+            <lightning-input type="email" onchange={handleEmailChange} label="Email"></lightning-input>
+            <lightning-input type="phone" label="Phone"></lightning-input>
+            <lightning-input type="number" label="Salary"></lightning-input>
+            <lightning-input type="number" label="Age"></lightning-input>
+        </div>
+        <lightning-button variant="brand" label="Click Me" 
+            title="Primary action" onclick={handleClick} 
+            class="slds-m-left_x-small">
+        </lightning-button>
+    </div>
+</template>

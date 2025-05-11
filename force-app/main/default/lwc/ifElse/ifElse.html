@@ -1,0 +1,22 @@
+<template>
+    <lightning-input onchange={handleShowTom} type="checkbox" label="Show Tom" name="Show Tom"></lightning-input>
+    <!-- <lightning-input onchange={handleShowJerry} type="checkbox" label="Show Jerry" name="Show Jerry"></lightning-input> -->
+    <!-- <div if:true={showTom}>
+        <img src="https://m.media-amazon.com/images/I/517yRBCPaGL.jpg" width="100" height="100" alt="Tom" />
+    </div>
+    <div if:true={showJerry}>
+        <img
+        width="100" height="100"
+        src="https://www.partysuppliesindia.com/cdn/shop/products/1_36_9f92dde3-d77d-4459-a21f-63744a94c836.jpg?v=1735574298&width=1500" 
+        alt="Jerry"/>
+    </div> -->
+    <div if:true={showTom}>
+        <img src="https://m.media-amazon.com/images/I/517yRBCPaGL.jpg" width="200" height="200" alt="Tom" />
+    </div>
+    <div if:false={showTom}>
+        <img
+        width="200" height="200"
+        src="https://www.partysuppliesindia.com/cdn/shop/products/1_36_9f92dde3-d77d-4459-a21f-63744a94c836.jpg?v=1735574298&width=1500" 
+        alt="Jerry"/>
+    </div>
+</template>

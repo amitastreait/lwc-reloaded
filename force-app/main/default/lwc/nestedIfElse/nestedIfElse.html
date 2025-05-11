@@ -1,0 +1,33 @@
+<template>
+    <lightning-card title="Nested If-Else" icon-name="custom:custom54">
+        <div class="slds-m-around_medium">
+            <lightning-button variant="brand" label="Define User" title="Define User" onclick={handleDefineUser}></lightning-button>
+            <lightning-input type="number" label="Enter Your Marks" onchange={handleMarksChange}></lightning-input>
+            <p lwc:if={gradeAPlus}>
+                You got A+
+            </p>
+            <p lwc:elseif={gradeA}>
+                You got A
+            </p>
+            <p lwc:elseif={gradeB}>
+                You got B
+            </p>
+            <p lwc:else>
+                You got C
+            </p>
+        </div>
+        <div if:true={person} class="slds-m-around_medium">
+            Name: {person.name}<br/>
+            Age: {person.age} <br/>
+            Title: {person.title}
+        </div>
+        <div if:true={user} class="slds-m-around_medium">
+            User Name: {user.name}
+        </div>
+        <template if:true={user}>
+            <div if:true={user} class="slds-m-around_medium">
+                User Name: {user.name}
+            </div>
+        </template>
+    </lightning-card>
+</template>

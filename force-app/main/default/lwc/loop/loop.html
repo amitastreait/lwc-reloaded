@@ -1,0 +1,16 @@
+<template>
+    <lightning-card  variant="Narrow" title="For Loop in LWC" icon-name="standard:account">
+        <div class="slds-p-around_large">
+            <template if:true={contacts} for:each={contacts} for:item="item" for:index="index">
+                <div key={item.Id}>
+                    <img class="profile" src={item.Picture__c} width="150" height="150" alt={item.Title} />
+                </div>
+                <div key={item.Id}>
+                    Name:  {item.FirstName} {item.LastName} <br/>
+                    Title {item.Title}
+                </div>
+            </template>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>

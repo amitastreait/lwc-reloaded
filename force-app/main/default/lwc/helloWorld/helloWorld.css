@@ -1,0 +1,23 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.person-info{
+    padding: 10px;
+    background-color: chocolate;
+    border-radius: 10px;
+    border-bottom: 10px solid red;
+}
+.heading{
+    padding: 10px;
+    background: darkcyan;
+}
+.hello{
+    font-size: 56px;
+    /* color: rebeccapurple;
+    background: white; */
+}
+.message{
+    font-size: 40px;
+    /* color: mediumpurple;
+    background: blue;*/
+}
