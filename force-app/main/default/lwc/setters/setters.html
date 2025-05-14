@@ -1,0 +1,15 @@
+<template>
+    <lightning-card  variant="Narrow" title="Setters" icon-name="custom:custom65">
+        <div class="slds-p-around_large">
+            Count is : {count}
+            <br/>
+            <span if:true={_message} style="color: red;">
+                {_message}
+            </span>
+        </div>
+         <div class="slds-p-around_large">
+            <lightning-button variant="inverse" label="Increment" title="Increment" onclick={handleIncrement}></lightning-button>
+         </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
