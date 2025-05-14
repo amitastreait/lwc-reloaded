@@ -34,22 +34,27 @@
 
 3. **Configuration File** (project-scratch-def.json):
    ```json
-    {
-        "orgName": "PantherSchools Company",
-        "edition": "Enterprise",
-        "hasSampleData": true,
-        "features": [
-            "EnableSetPasswordInApi"
-         ],
-        "settings": {
-            "lightningExperienceSettings": {
-               "enableS1DesktopEnabled": true
-            },
-            "mobileSettings": {
-               "enableS1EncryptedStoragePref2": false
-            }
-        }
-    }
+   {
+      "orgName": "PantherSchools Company",
+      "edition": "Enterprise",
+      "hasSampleData": true,
+      "adminEmail": "email.PantherSchools@gmail.com",
+      "username": "email.PantherSchools@gmail.com.scratch2025",
+      "features": [
+         "EnableSetPasswordInApi",
+         "Communities",
+         "ContactsToMultipleAccounts",
+         "Knowledge"
+      ],
+      "settings": {
+         "lightningExperienceSettings": {
+            "enableS1DesktopEnabled": true
+         },
+         "mobileSettings": {
+            "enableS1EncryptedStoragePref2": false
+         }
+      }
+   }
    ```
 ---
 ## Scratch Org Definition File Options

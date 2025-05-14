@@ -1,0 +1,27 @@
+<template>
+    <lightning-card  variant="Narrow" title="Getters" icon-name="custom:custom65">
+        <div class="slds-p-around_large">
+            Full Name: {fullName}
+        </div>
+        <div class="slds-p-around_large">
+            <lightning-input type="number" variant="standard" name="Marks" label="Enter your Marks"
+                onchange={handleInputChange}>
+            </lightning-input>
+        </div>
+        <div class="slds-p-around_large">
+            <p lwc:if={gradeAPlus}>
+                You got A+
+            </p>
+            <p lwc:elseif={gradeA}>
+                You got A 
+            </p>
+            <p lwc:elseif={gradeB}>
+                You got B
+            </p>
+            <p lwc:else>
+                You got C
+            </p>
+        </div>
+        <div slot="footer">Card Footer</div>
+    </lightning-card>
+</template>
