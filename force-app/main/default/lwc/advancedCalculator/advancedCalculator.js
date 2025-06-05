@@ -39,7 +39,9 @@ export default class AdvancedCalculator extends LightningElement {
 
     evaluate(final = false) {
         try {
+            // Evaluate only if valid characters exist
             if (/^[0-9+\-*/.() ]*$/.test(this.expression)) {
+                // Use Function constructor for evaluation (safer than eval in some cases)
                 const res = Function(`return (${this.expression})`)();
                 if (res !== undefined) {
                     this.result = res;

@@ -4,7 +4,7 @@ export default class Decorators extends LightningElement {
 
    @api name;
    @track age;
-   @track user = {
+   user = {
         Name: 'Amit Singh',
         age: '',
         address: {
@@ -20,70 +20,6 @@ export default class Decorators extends LightningElement {
         }
    }
 
-   @track users = [
-        {
-            Name: 'Amit Singh',
-            age: '',
-            address: {
-                city: 'Noida',
-                country: {
-                    name: 'India',
-                    code: 'IN'
-                },
-                state: {
-                    name: 'Uttar Pradesh',
-                    stateCode: 'UP'
-                }
-            }
-    },
-    {
-            Name: 'Amit Singh',
-            age: '',
-            address: {
-                city: 'Noida',
-                country: {
-                    name: 'India',
-                    code: 'IN'
-                },
-                state: {
-                    name: 'Uttar Pradesh',
-                    stateCode: 'UP'
-                }
-            }
-    },
-    {
-            Name: 'Amit Singh',
-            age: '',
-            address: {
-                city: 'Noida',
-                country: {
-                    name: 'India',
-                    code: 'IN'
-                },
-                state: {
-                    name: 'Uttar Pradesh',
-                    stateCode: 'UP'
-                }
-            }
-    },
-    {
-            Name: 'Amit Singh',
-            age: '',
-            address: {
-                city: 'Noida',
-                country: {
-                    name: 'India',
-                    code: 'IN'
-                },
-                state: {
-                    name: 'Uttar Pradesh',
-                    stateCode: 'UP'
-                }
-            }
-    }
-   ]
-
-   @api
    handleChangeUserInfo(){
         this.user = {
             Name: 'Ankit Singh',

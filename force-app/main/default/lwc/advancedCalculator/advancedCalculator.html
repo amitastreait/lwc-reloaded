@@ -5,6 +5,7 @@
             <div class="result">
                 <strong>= {result}</strong>
             </div>
+            
             <div class="buttons">
                 <template for:each={buttons} for:item="btn">
                     <lightning-button key={btn.label} label={btn.label} onclick={handleButtonClick} class="calc-btn"></lightning-button>

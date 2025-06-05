@@ -7,12 +7,30 @@
 .sfdx/
 .localdevserver/
 deploy-options.json
+form.htm
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
 
 # LWC Jest coverage reports
+scripts/
+scripts/html/
+scripts/commands/
 coverage/
+python/
+force-app/main/default/classes/Log*.cls
+force-app/main/default/classes/Log*.cls-meta.xml
+force-app/main/default/classes/ILog*.cls
+force-app/main/default/classes/ILog*.cls-meta.xml
+force-app/main/default/classes/IContext*.cls
+force-app/main/default/classes/IContext*.cls-meta.xml
+force-app/main/default/classes/AsyncLogProcessor.cls
+force-app/main/default/classes/AsyncLogProcessor.cls-meta.xml
+force-app/main/default/classes/BufferCleanupBatch.cls
+force-app/main/default/classes/BufferCleanupBatch.cls-meta.xml
+force-app/main/default/classes/DatabasePersistenceStrategy.cls
+force-app/main/default/classes/DatabasePersistenceStrategy.cls-meta.xml
+
 
 # Logs
 logs

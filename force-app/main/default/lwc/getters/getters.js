@@ -9,7 +9,7 @@ export default class Getters extends LightningElement {
 
     handleInputChange(event){
         this.marks = event.target.value;
-        //this.fullName = `John Doe ${Math.random()}`
+        this.fullName = `John Doe ${Math.random()}`
     }
 
     get fullName(){
