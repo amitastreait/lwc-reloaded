@@ -31,4 +31,22 @@ export default class Parent extends LightningElement {
             "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/jennifer_wu.jpg"
         }
     ];
+
+    constructor(){
+        super();
+        console.log(`I am from parent component constructor`);
+        this.message = 'Changed from constructor';
+        this.contacts = [
+            {
+                "Id": 1,
+                "FirstName": "Amy",
+                "LastName": "Taylor",
+                "Title": "VP of Engineering",
+                "Email": "amy@demo.net",
+                "Phone": "4152568563",
+                "Picture__c": "https://s3-us-west-2.amazonaws.com/dev-or-devrl-s3-bucket/sample-apps/people/amy_taylor.jpg"
+            }
+        ]
+        console.log(this.message);
+    }
 }
