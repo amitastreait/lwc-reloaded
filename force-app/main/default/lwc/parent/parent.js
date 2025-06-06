@@ -32,6 +32,9 @@ export default class Parent extends LightningElement {
         }
     ];
 
+    greetings = '';
+    hasRendered = false;
+
     constructor(){
         super();
         console.log(`I am from parent component constructor`);
@@ -55,6 +58,23 @@ export default class Parent extends LightningElement {
         this.handleMessage('Inside Handle message');
         this.loadCss();
         this.loadExternalJs();
+        this.greetings = `${Math.random()}`
+        alert(this.greetings);
+    }
+
+    renderedCallback(){
+       /* if(!this.hasRendered){
+            console.log(`I am from parent component renderedCallback`);
+            this.greetings = `${Math.random()}`;
+            this.hasRendered = true;
+        } */
+        if(this.hasRendered){
+            return;
+        }
+        console.log(`I am from parent component renderedCallback`);
+        this.greetings = `${Math.random()}`;
+        this.hasRendered = true;
+        /** Can Access the child elements */
     }
 
     handleMessage(message){
