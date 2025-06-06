@@ -9,4 +9,7 @@ export default class Child extends LightningElement {
         console.log('Inside Child constructor')
         console.log(this.componentType)
     }
+    connectedCallback(){
+        console.log(`I am from child component connectedCallback`);
+    }
 }
