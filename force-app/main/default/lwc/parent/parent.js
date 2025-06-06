@@ -59,7 +59,7 @@ export default class Parent extends LightningElement {
         this.loadCss();
         this.loadExternalJs();
         this.greetings = `${Math.random()}`
-        alert(this.greetings);
+        // throw new Error('Error is ConnectedCallback Method');
     }
 
     renderedCallback(){
@@ -75,6 +75,12 @@ export default class Parent extends LightningElement {
         this.greetings = `${Math.random()}`;
         this.hasRendered = true;
         /** Can Access the child elements */
+    }
+
+    errorCallback(error, stack){
+        console.log(`I am from parent component errorCallback`);
+        console.error('The error occured while rendering the components ', JSON.stringify(error))
+        console.error('The complete stack for the error ', stack)
     }
 
     handleMessage(message){
