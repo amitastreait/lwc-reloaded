@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Admin Dashboard" icon-name="utility:settings">
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card title="Users">
+                        <div class="slds-p-around_medium">
+                            <p class="slds-text-heading_large">1,247</p>
+                            <p class="slds-text-color_weak">Active Users</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card title="Revenue">
+                        <div class="slds-p-around_medium">
+                            <p class="slds-text-heading_large">$45,678</p>
+                            <p class="slds-text-color_weak">This Month</p>
+                        </div>
+                    </lightning-card>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-card title="Performance">
+                        <div class="slds-p-around_medium">
+                            <p class="slds-text-heading_large">98.5%</p>
+                            <p class="slds-text-color_weak">Uptime</p>
+                        </div>
+                    </lightning-card>
+                </div>
+            </div>
+            
+            <div class="slds-m-top_medium">
+                <lightning-button label="Back to Default" data-view="default" onclick={handleViewChange}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
