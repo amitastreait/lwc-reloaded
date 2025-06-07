@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>63.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Meta Config file</masterLabel>
+    <description>
+        This component will be used to demonstrate the usage of the Meta XML file in Lightning Web component
+    </description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
+        <target>lightning__RecordAction</target>
+        <target>lightning__Inbox</target>
+        <target>lightning__UtilityBar</target>
+        <target>lightning__FlowScreen</target>
+        <!--<target>lightningSnapin__ChatMessage</target>-->
+        <!--<target>lightningSnapin__Minimized</target>-->
+        <!--<target>lightningSnapin__PreChat</target>-->
+        <!--<target>lightningSnapin__ChatHeader</target>-->
+        <!--<target>lightningCommunity__Page</target>-->
+        <!--<target>lightningCommunity__Default</target>-->
+        <!--<target>lightningCommunity__Page_Layout</target>-->
+        <!--<target>lightningCommunity__Theme_Layout</target>-->
+    </targets>
+    <!-- Configuring the design attributes -->
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Account</object>
+                <object>Contact</object>
+            </objects>
+            <property name="message" type="String"
+                default="Meta XML File"
+                required="true"
+                label="Welcome Message" description="Welcome message to display" />
+            <property name="objectApiName" type="String"
+                default="Account"
+                required="true"
+                label="Select Object" description="The object to display the record in table view" />
+            <property name="showHeader" type="Boolean" default="true" 
+                      label="Show Header" description="Display the component header"/>
+            <property name="maxRecords" type="Integer" default="5" min="1" max="100"
+                      label="Max Records" description="Maximum number of records to display"/>
+        </targetConfig>
+        <targetConfig targets="lightning__HomePage">
+            <property name="message" type="String"
+                    default="Meta XML File"
+                    required="true"
+                    label="Welcome Message" description="Welcome message to display" />
+                <property name="objectApiName" type="String"
+                    default="Account"
+                    required="true"
+                    label="Select Object" description="The object to display the record in table view" />
+                <property name="showHeader" type="Boolean" default="true" 
+                        label="Show Header" description="Display the component header"/>
+                <property name="maxRecords" type="Integer" default="5" min="1" max="100"
+                        label="Max Records" description="Maximum number of records to display"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
