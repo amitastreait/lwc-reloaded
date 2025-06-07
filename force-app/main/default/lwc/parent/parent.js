@@ -34,6 +34,7 @@ export default class Parent extends LightningElement {
 
     greetings = '';
     hasRendered = false;
+    showChild = true;
 
     constructor(){
         super();
@@ -92,5 +93,12 @@ export default class Parent extends LightningElement {
     }
     loadExternalJs(){
         console.log('Loading the External JS')
+    }
+
+    handleHide(){
+        this.showChild = false;
+    }
+    handleShow(){
+        this.showChild = true;
     }
 }

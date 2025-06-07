@@ -7,6 +7,12 @@
             {greetings}
         </div>
         <div class="slds-m-around_medium">
+            <lightning-button-group>
+              <lightning-button label="Hide Child Component" onclick={handleHide} ></lightning-button>
+              <lightning-button label="Show Child Component" onclick={handleShow}></lightning-button>
+            </lightning-button-group>
+        </div>
+        <div lwc:if={showChild} class="slds-m-around_medium">
             <span>Child Component Content Goes here</span>
             <template lwc:if={contacts} for:each={contacts} for:item="con" for:index="index">
                 <c-child key={con.Id} contact={con} component-type={message}></c-child>

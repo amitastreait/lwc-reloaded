@@ -16,4 +16,18 @@ export default class Child extends LightningElement {
     renderedCallback(){
         console.log(`I am from child component renderedCallback`);
     }
+
+    disconnectedCallback(){
+        console.log(`I am from child component disconnectedCallback`)
+        this.removeThirdPartyLibraries();
+        this.removeListers();
+    }
+
+    removeThirdPartyLibraries(){
+        console.log(`removeThirdPartyLibraries`)
+    }
+
+    removeListers(){
+        console.log(`removeListers`)
+    }
 }
