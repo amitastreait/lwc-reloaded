@@ -1,0 +1,16 @@
+<template>
+    <div class="main-div">
+        <div class="profile-info">
+            <img width="200" height="200" src={contact.Picture__c} alt={contact.LastName} />
+        </div>
+        <div class="name-info">
+            {contact.FirstName} {contact.LastName}
+        </div>
+        <div class="contact-info">
+            {contact.Email} - {contact.Phone}
+        </div>
+        <div class="other-info">
+            {contact.Title}
+        </div>
+    </div>
+</template>

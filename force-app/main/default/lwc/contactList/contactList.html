@@ -1,0 +1,10 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Contact List" icon-name="standard:contact">
+        <div class="slds-m-around_small">
+            <template if:true={contacts} for:each={contacts} for:item="con">
+                <c-contact-tile key={con.Id} contact={con} ></c-contact-tile>
+            </template>
+        </div>
+        <div slot="footer">LWB Work</div>
+    </lightning-card>
+</template>
