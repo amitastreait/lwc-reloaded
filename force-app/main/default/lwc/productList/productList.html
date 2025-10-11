@@ -1,6 +1,6 @@
 <template>
     <lightning-card  variant="Narrow" title="Product List" icon-name="standard:product2">
-        <div class="slds-p-horizontal_medium">
+        <!-- <div class="slds-p-horizontal_medium">
             <template lwc:if={products.data} for:each={products.data} for:item="product" for:index="index">
                 <div key={product.Id}>
                     {product.Name}
@@ -9,6 +9,18 @@
             </template>
             <span lwc:if={products.error} style="color: red;">
                 {products.error.body.message}
+            </span>
+        </div> -->
+
+        <div class="slds-p-horizontal_medium">
+            <template lwc:if={filteredProducts} for:each={filteredProducts} for:item="product" for:index="index">
+                <div key={product.Id}>
+                    {product.Name} &nbsp; &nbsp; {product.ProductCode}
+                    <hr/>
+                </div>
+            </template>
+            <span lwc:if={errors} style="color: red;">
+                {errors.body.message}
             </span>
         </div>
     </lightning-card>
