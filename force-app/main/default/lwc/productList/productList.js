@@ -8,6 +8,10 @@ export default class ProductList extends LightningElement {
     errors;
     productCode = 'GC1060';
 
+    handleInputChange(event){
+        this.productCode = event.target.value;
+    }
+
     @wire(getAllProducts) products;
     // { data, error }
     // products.data = List of Products

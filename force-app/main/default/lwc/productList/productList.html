@@ -1,5 +1,5 @@
 <template>
-    <lightning-card  variant="Narrow" title="Product List" icon-name="standard:product2">
+    <lightning-card  variant="Narrow" title="Product List" icon-name="standard:product">
         <!-- <div class="slds-p-horizontal_medium">
             <template lwc:if={products.data} for:each={products.data} for:item="product" for:index="index">
                 <div key={product.Id}>
@@ -11,12 +11,13 @@
                 {products.error.body.message}
             </span>
         </div> -->
-
+        <div class="slds-p-horizontal_medium">
+            <lightning-input type="text" variant="standard" name="Product Code" label="Product Code" required onclick={handleInputChange}></lightning-input>
+        </div>
         <div class="slds-p-horizontal_medium">
             <template lwc:if={filteredProducts} for:each={filteredProducts} for:item="product" for:index="index">
                 <div key={product.Id}>
                     {product.Name} &nbsp; &nbsp; {product.ProductCode}
-                    <hr/>
                 </div>
             </template>
             <span lwc:if={errors} style="color: red;">
