@@ -1,0 +1,15 @@
+<template>
+    <lightning-card  variant="Narrow" title="Product List" icon-name="standard:product2">
+        <div class="slds-p-horizontal_medium">
+            <template lwc:if={products.data} for:each={products.data} for:item="product" for:index="index">
+                <div key={product.Id}>
+                    {product.Name}
+                    <hr/>
+                </div>
+            </template>
+            <span lwc:if={products.error} style="color: red;">
+                {products.error.body.message}
+            </span>
+        </div>
+    </lightning-card>
+</template>
