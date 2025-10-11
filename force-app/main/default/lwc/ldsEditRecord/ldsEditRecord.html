@@ -1,0 +1,17 @@
+<template>
+    <lightning-card  variant="Narrow" title="LDS Edit Record" icon-name="standard:account">
+        <div class="slds-p-horizontal_medium">
+            <lightning-record-edit-form onsuccess={handleSuccess} onerror={handleError} record-id={recordId} object-api-name={objectApiName} >
+                <lightning-messages> </lightning-messages>
+                <lightning-output-field field-name="ParentId"> </lightning-output-field>
+                <lightning-input-field field-name="Name"> </lightning-input-field>
+                <lightning-input-field field-name="Rating"> </lightning-input-field>
+                <lightning-input-field field-name="Industry"> </lightning-input-field>
+                <lightning-input-field field-name="Active"> </lightning-input-field>
+                <lightning-input-field field-name="AnnualRevenue"> </lightning-input-field>
+                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Update">
+                </lightning-button>
+            </lightning-record-edit-form>
+        </div>
+    </lightning-card>
+</template>

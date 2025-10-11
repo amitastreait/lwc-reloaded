@@ -17,6 +17,7 @@ scripts/
 scripts/html/
 scripts/commands/
 coverage/
+docs/
 python/
 force-app/main/default/classes/Log*.cls
 force-app/main/default/classes/Log*.cls-meta.xml
