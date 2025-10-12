@@ -1,0 +1,17 @@
+<template>
+    <lightning-card  variant="Narrow" title="Update Records Ui Record API" icon-name="standard:account">
+        <div class="slds-m-around_small">
+            <lightning-textarea
+              max-length="1000"
+              name="Description" 
+              label="Description" 
+              placeholder="type here..."
+              variant="standard"
+              onchange={handleInputChange}
+            ></lightning-textarea>
+        </div>
+        <div class="slds-m-around_small">
+            <lightning-button variant="brand" label="Update Record" title="Update Record" onclick={handleUpdate}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
