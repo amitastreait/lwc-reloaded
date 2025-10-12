@@ -1,0 +1,13 @@
+<template>
+    <lightning-spinner 
+      alternative-text="Loading" 
+      size="small"
+      variant="brand"
+      lwc:if={isLoading}
+    ></lightning-spinner>
+    <lightning-card  variant="Narrow" title="Create Record Ui Record API" icon-name="standard:account">
+        <div class="slds-m-around_small">
+            <lightning-button variant="brand" label="Create Account" title="Create Account" onclick={handleClick}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
