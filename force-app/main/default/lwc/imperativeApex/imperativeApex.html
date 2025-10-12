@@ -1,0 +1,20 @@
+<template>
+    <lightning-spinner alternative-text="Loading" size="small" variant="brand" lwc:if={isLoading} ></lightning-spinner>
+    <lightning-card  variant="Narrow" title="Imperative Apex" icon-name="standard:account">
+        <div class="slds-p-horizontal_medium">
+            <template lwc:if={accounts} for:each={accounts} for:item="acc" for:index="index">
+                <p key={acc.Id}>
+                    {acc.Name}
+                </p>
+            </template>
+        </div>
+        <div if:true={errors} class="slds-p-horizontal_medium">
+            <span style="color: red;">
+                {errors.body.message}
+            </span>
+        </div>
+        <div class="slds-p-horizontal_medium">
+            <lightning-button variant="brand" label="List Accounts" title="List Accounts" onclick={handleClick}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
