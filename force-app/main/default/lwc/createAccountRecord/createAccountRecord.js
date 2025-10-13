@@ -1,12 +1,29 @@
 import { api, LightningElement } from 'lwc';
 
-import { createRecord } from 'lightning/uiRecordApi';
+import { createRecord, deleteRecord } from 'lightning/uiRecordApi';
 
 export default class CreateAccountRecord extends LightningElement {
     @api recordId;
     @api objectApiName;
 
+    recordIdTodelete = '001gK00000ONcrZQAT'
+
     isLoading = false;
+
+    handleDelete(event){
+        event.preventDefault();
+        this.isLoading = true;
+        deleteRecord(this.recordIdTodelete)
+        .then(record => {
+            alert('The record has been deleted')
+        })
+        .catch(error => {
+            console.error('Error occured while deleting the record !', error);
+        })
+        .finally(() => {
+            this.isLoading = false;
+        })
+    }
 
     handleClick(event){
         event.preventDefault();
