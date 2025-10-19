@@ -1,0 +1,58 @@
+.calendar-container {
+    min-height: 600px;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.25rem;
+}
+
+/* Override FullCalendar styles for Salesforce Lightning Design System */
+.calendar-container :global(.fc) {
+    font-family: 'Salesforce Sans', Arial, sans-serif;
+}
+
+.calendar-container :global(.fc-button) {
+    background-color: #0176d3;
+    border-color: #0176d3;
+    text-transform: none;
+    font-weight: 400;
+}
+
+.calendar-container :global(.fc-button:hover) {
+    background-color: #014486;
+    border-color: #014486;
+}
+
+.calendar-container :global(.fc-button-active) {
+    background-color: #014486;
+    border-color: #014486;
+}
+
+.calendar-container :global(.fc-toolbar-title) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #080707;
+}
+
+.calendar-container :global(.fc-daygrid-day-number) {
+    color: #080707;
+    text-decoration: none;
+}
+
+.calendar-container :global(.fc-col-header-cell-cushion) {
+    color: #3e3e3c;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.calendar-container :global(.fc-event) {
+    cursor: pointer;
+    border-radius: 0.25rem;
+}
+
+.calendar-container :global(.fc-event:hover) {
+    opacity: 0.8;
+}
+
+.calendar-container :global(.fc-daygrid-day.fc-day-today) {
+    background-color: #f3f2f2;
+}

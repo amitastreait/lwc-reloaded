@@ -1,11 +1,9 @@
 <template>
     <lightning-card  variant="Narrow" title="Quick Case" icon-name="standard:case">
+        <lightning-button slot="actions" variant="brand" label="Create Case" title="Create Case" onclick={handleClick}></lightning-button>
         <div class="slds-p-horizontal_medium">
             <p>
                 {recordId}
-            </p>
-             <p>
-                {objectApiName}
             </p>
         </div>
         <div class="slds-p-horizontal_medium">
@@ -30,6 +28,27 @@
                 label="Priority"
                 placeholder="Select Priority"
                 options={priorityOptions}
+            >
+            </lightning-combobox>
+            <lightning-combobox
+                name="Type"
+                label="Type"
+                placeholder="Select Type"
+                options={typeOptions}
+            >
+            </lightning-combobox>
+            <lightning-combobox
+                name="Origin"
+                label="Origin"
+                placeholder="Select Origin"
+                options={originOptions}
+            >
+            </lightning-combobox>
+            <lightning-combobox
+                name="Reason"
+                label="Case Reason"
+                placeholder="Select Reason"
+                options={reasonOptions}
             >
             </lightning-combobox>
         </div>

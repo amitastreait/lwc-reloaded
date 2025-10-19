@@ -12,12 +12,19 @@ export default class QuickCase extends LightningElement {
 
     statusOptions;
     priorityOptions;
+    typeOptions;
+    originOptions;
+    reasonOptions;
 
     @wire(getPicklistValuesByRecordType, { recordTypeId: '$recordTypeId', objectApiName: CASE_OBJECT})
     wiredPicklistOptions({ data, error}){
         if(data){
             console.log('All picklist Info', data);
             this.priorityOptions = data.picklistFieldValues.Priority.values;
+            this.originOptions   = data.picklistFieldValues.Origin.values;
+            this.typeOptions     = data.picklistFieldValues.Type.values;
+            this.reasonOptions   = data.picklistFieldValues.Reason.values;
+            this.statusOptions   = data.picklistFieldValues.Status.values;
         } else if(error){
             console.error('All picklist Error', error);
         }
@@ -27,7 +34,7 @@ export default class QuickCase extends LightningElement {
     wiredStatusPicklist({ data, error}){
         if(data){
             console.log('Status picklist Info', data);
-            this.statusOptions = data.values;
+            // this.statusOptions = data.values;
         } else if(error){
             console.error('Status picklist Error', error);
         }
