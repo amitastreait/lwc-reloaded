@@ -1,6 +1,13 @@
-import { LightningElement } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
+import { LightningElement, wire } from 'lwc';
+import { NavigationMixin, CurrentPageReference } from 'lightning/navigation';
 export default class Source extends NavigationMixin(LightningElement) {
+
+    @wire(CurrentPageReference)
+        pageRef
+    
+    connectedCallback() {
+        console.log('Current page reference is ', JSON.stringify(this.pageRef))
+    }
 
     handleNavigateToLightningWebComponent(){
         this[NavigationMixin.Navigate]({
