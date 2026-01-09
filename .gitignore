@@ -35,6 +35,14 @@ force-app/main/default/classes/DatabasePersistenceStrategy.cls-meta.xml
 force-app/main/default/classes/SalesforceKeyGenerator.cls
 force-app/main/default/classes/SalesforceKeyGenerator.cls-meta.xml
 
+force-app/main/default/classes/StripePaymentService.cls
+force-app/main/default/classes/StripePaymentService.cls-meta.xml
+
+force-app/main/default/classes/StripeReturnHandlerController.cls
+force-app/main/default/classes/StripeReturnHandlerController.cls-meta.xml
+
+force-app/main/default/lwc/stripePayment
+
 
 # Logs
 logs

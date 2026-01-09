@@ -1,11 +1,11 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from "lwc";
 
-export default class HelloWorld extends LightningElement {
-    grettings = 'Hello World! Welcome to LWC!';
-    message = 'My First Lightning Web Component'
-    name = 'Amit Singh'
-    age = 43
-    address = 'New York, NY'
-    phone = '+1 (234) 567-8901'
-    email = '<EMAIL>'
+export default class extends LightningElement {
+  @api objectApiName;
+
+  get computedClassNames() {
+    return [
+        this.objectApiName === 'Account' ? "slds-theme_shade" : "slds-theme_success"
+    ];
+  }
 }

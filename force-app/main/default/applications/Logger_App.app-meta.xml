@@ -17,6 +17,7 @@
     <tabs>Log_Archive__c</tabs>
     <tabs>Log_Buffer__c</tabs>
     <tabs>Log_Statistics__c</tabs>
+    <tabs>StripePaymentTransaction__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Logger_App_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -34,6 +35,9 @@
         </mappings>
         <mappings>
             <tab>Log_Statistics__c</tab>
+        </mappings>
+        <mappings>
+            <tab>StripePaymentTransaction__c</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

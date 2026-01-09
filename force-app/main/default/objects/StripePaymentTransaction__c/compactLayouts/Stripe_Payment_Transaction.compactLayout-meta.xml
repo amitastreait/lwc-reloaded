@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Stripe_Payment_Transaction</fullName>
+    <fields>Name</fields>
+    <fields>Amount__c</fields>
+    <fields>Stripe_Transaction_ID__c</fields>
+    <fields>Status__c</fields>
+    <label>Stripe Payment Transaction</label>
+</CompactLayout>

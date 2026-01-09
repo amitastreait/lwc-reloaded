@@ -95,6 +95,8 @@
 		<members>Log_Configuration__c</members>
 		<members>Log_Entry__c</members>
 		<members>Log_Statistics__c</members>
+		<members>StripePaymentTransaction__c</members>
+		<members>Stripe_Config__mdt</members>
 		<name>CustomObject</name>
 	</types>
 	<types>
@@ -107,6 +109,8 @@
 		<members>Log_Configuration__c-Log Configuration Layout</members>
 		<members>Log_Entry__c-Log Entry Layout</members>
 		<members>Log_Statistics__c-Log Statistics Layout</members>
+		<members>StripePaymentTransaction__c-Stripe Payment Transaction Layout</members>
+		<members>Stripe_Config__mdt-Stripe Config Layout</members>
 		<name>Layout</name>
 	</types>
 	<types>
@@ -128,5 +132,5 @@
 		<members>Logger_Object_Permissions</members>
 		<name>PermissionSet</name>
 	</types>
-	<version>63.0</version>
+	<version>65.0</version>
 </Package>

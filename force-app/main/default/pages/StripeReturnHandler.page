@@ -1,0 +1,12 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" controller="StripeReturnHandlerController">
+    <apex:pageMessage strength="3" severity="info" summary="Processing Payment..." rendered="{!isProcessing}"/>
+    <apex:pageMessage strength="3" severity="confirm" summary="Payment Successful!" rendered="{!isSuccess}"/>
+    <apex:pageMessage strength="3" severity="error" summary="Payment Failed: {!errorMessage}" rendered="{!isError}"/>
+    
+    <script>
+        // Optional: you can redirect back to your LWC page using JS after processing
+        if({!isSuccess} || {!isError}) {
+            // window.location.href = 'URL_TO_YOUR_ORIGINAL_LWC_PAGE'; 
+        }
+    </script>
+</apex:page>
