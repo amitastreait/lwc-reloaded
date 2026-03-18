@@ -1,0 +1,56 @@
+<template>
+    <lightning-card icon-name="standard:flight" class="flight-card-container">
+    <span class="flightTitle">AvailableFlights</span>
+        <!-- Flight Cards List -->
+        <div class="flight-list-container">
+            <template for:each={flightData} for:item="flight">
+                <div key={flight.flightId} class="flight-card">
+                    <!-- Flight Info Section -->
+                    <div class="flight-info">
+                        <h2 class="flight-id">{flight.flightId}</h2>
+                        <div class="discount-tag">{flight.discountPercentage}% Off</div>
+                    </div>
+
+                    <!-- Flight Price, Duration, Departure and Arrival -->
+                    <div class="price-duration">
+                        <div class="price">
+                            <strong>${flight.price}</strong>
+                        </div>
+                        <div class="duration">
+                            {flight.durationInHr}
+                        </div>
+                    </div>
+
+                    <!-- Timeline for Departure, Duration and Arrival -->
+                    <div class="flight-timeline">
+                        <div class="timeline">
+                            <div class="time-point departure">
+                                <span>Departure Time: {flight.departureTime}</span>
+                            </div>
+                            <div class="time-point arrival">
+                                <span>Arrival Time: {flight.arrivalInHr}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info Section (Layovers, Pets, etc.) -->
+                    <div class="additional-info">
+                        <div class="layovers">
+                            <lightning-icon icon-name="utility:loop" size="small"></lightning-icon>
+                            <span>Layovers: {flight.numLayovers}</span>
+                        </div>
+                        <div class="pets">
+                            <lightning-icon icon-name="utility:paw" size="small"></lightning-icon>
+                            <span>Pets Allowed: {flight.petAllowedStatus}</span>
+                        </div>
+                    </div>
+
+                    <!-- Book Now Button -->
+                    <div class="card-footer">
+                        <lightning-button variant="brand" label="Book Now" onclick={handleBookFlight} data-flight-id={flight.flightId}></lightning-button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

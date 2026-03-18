@@ -1,0 +1,5 @@
+{
+  "title": "My Flight Response",
+  "description": "My Flight Response",
+  "lightning:type": "@apexClassType/c__AvailableFlight"
+}
