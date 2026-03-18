@@ -1,93 +1,114 @@
 /**
- * @description Test class for AccountContactRestService
+ * @description Test class for AccountContactRestService.
+ *              Uses TestDataFactory and TestContextHelper to eliminate boilerplate.
+ *
+ *              Why no @testSetup:
+ *                - The service creates all records internally.
+ *                - Rollback/null-request tests assert zero existing accounts;
+ *                  shared setup data would break those assertions.
+ *
  * @author Salesforce Developer
  * @date 2025-12-15
  */
 @isTest
 private class AccountContactRestServiceTest {
 
+    // =========================================================================
+    // PRIVATE REQUEST BUILDERS
+    // Centralise AccountData / ContactData construction so each test method
+    // focuses only on what makes it distinct.
+    // =========================================================================
+
+    /** Full request: account with all fields + two contacts */
+    private static AccountContactRestService.AccountContactRequest buildFullRequest() {
+        AccountContactRestService.AccountContactRequest req =
+            new AccountContactRestService.AccountContactRequest();
+
+        AccountContactRestService.AccountData acct = new AccountContactRestService.AccountData();
+        acct.accountName       = 'Test Account';
+        acct.phone             = '555-1234';
+        acct.website           = 'www.testaccount.com';
+        acct.industry          = 'Technology';
+        acct.billingStreet     = '123 Main St';
+        acct.billingCity       = 'San Francisco';
+        acct.billingState      = 'California';
+        acct.billingPostalCode = '94105';
+        acct.billingCountry    = 'United States';
+        req.accountData = acct;
+
+        AccountContactRestService.ContactData c1 = new AccountContactRestService.ContactData();
+        c1.firstName   = 'John';
+        c1.lastName    = 'Doe';
+        c1.email       = 'john.doe@test.com';
+        c1.phone       = '555-1111';
+        c1.title       = 'CEO';
+        c1.department  = 'Executive';
+        c1.mobilePhone = '555-2222';
+        c1.isVerified  = true;
+
+        AccountContactRestService.ContactData c2 = new AccountContactRestService.ContactData();
+        c2.firstName   = 'Jane';
+        c2.lastName    = 'Smith';
+        c2.email       = 'jane.smith@test.com';
+        c2.phone       = '555-3333';
+        c2.title       = 'CTO';
+        c2.department  = 'Technology';
+        c2.mobilePhone = '555-4444';
+        c2.isVerified  = false;
+
+        req.contacts = new List<AccountContactRestService.ContactData>{ c1, c2 };
+        return req;
+    }
+
+    /** Minimal request: account only (name + phone), no contacts */
+    private static AccountContactRestService.AccountContactRequest buildMinimalRequest(String accountName) {
+        AccountContactRestService.AccountContactRequest req =
+            new AccountContactRestService.AccountContactRequest();
+
+        AccountContactRestService.AccountData acct = new AccountContactRestService.AccountData();
+        acct.accountName = accountName;
+        acct.phone       = '555-9999';
+        req.accountData  = acct;
+
+        return req;
+    }
+
+
+    // =========================================================================
+    // TEST METHODS
+    // =========================================================================
+
     /**
      * @description Test successful creation of Account with multiple Contacts
      */
     @isTest
     static void testCreateAccountWithContacts_Success() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
-
-        // Prepare request data
-        AccountContactRestService.AccountContactRequest requestData = new AccountContactRestService.AccountContactRequest();
-
-        // Account data
-        AccountContactRestService.AccountData accountData = new AccountContactRestService.AccountData();
-        accountData.accountName = 'Test Account';
-        accountData.phone = '555-1234';
-        accountData.website = 'www.testaccount.com';
-        accountData.industry = 'Technology';
-        accountData.billingStreet = '123 Main St';
-        accountData.billingCity = 'San Francisco';
-        accountData.billingState = 'California';
-        accountData.billingPostalCode = '94105';
-        accountData.billingCountry = 'United States';
-        requestData.accountData = accountData;
-
-        // Contact data
-        List<AccountContactRestService.ContactData> contacts = new List<AccountContactRestService.ContactData>();
-
-        AccountContactRestService.ContactData contact1 = new AccountContactRestService.ContactData();
-        contact1.firstName = 'John';
-        contact1.lastName = 'Doe';
-        contact1.email = 'john.doe@test.com';
-        contact1.phone = '555-1111';
-        contact1.title = 'CEO';
-        contact1.department = 'Executive';
-        contact1.mobilePhone = '555-2222';
-        contact1.isVerified = true;
-        contacts.add(contact1);
-
-        AccountContactRestService.ContactData contact2 = new AccountContactRestService.ContactData();
-        contact2.firstName = 'Jane';
-        contact2.lastName = 'Smith';
-        contact2.email = 'jane.smith@test.com';
-        contact2.phone = '555-3333';
-        contact2.title = 'CTO';
-        contact2.department = 'Technology';
-        contact2.mobilePhone = '555-4444';
-        contact2.isVerified = false;
-        contacts.add(contact2);
-
-        requestData.contacts = contacts;
+        TestContextHelper.setupRestContext();
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(requestData);
+        AccountContactRestService.AccountContactResponse result =
+            AccountContactRestService.createAccountContact(buildFullRequest());
         Test.stopTest();
 
-        // Assertions
         System.assertEquals(true, result.success, 'Operation should be successful');
         System.assertNotEquals(null, result.account, 'Account info should not be null');
         System.assertNotEquals(null, result.account.accountId, 'Account ID should not be null');
         System.assertNotEquals(null, result.account.externalId, 'Account External ID should not be null');
         System.assertEquals(2, result.contacts.size(), 'Should have 2 contacts');
 
-        // Verify contact info structure
-        for (AccountContactRestService.ContactInfo contactInfo : result.contacts) {
-            System.assertNotEquals(null, contactInfo.contactId, 'Contact ID should not be null');
-            System.assertNotEquals(null, contactInfo.email, 'Email should not be null');
-            System.assertNotEquals(null, contactInfo.externalId, 'Contact External ID should not be null');
+        for (AccountContactRestService.ContactInfo ci : result.contacts) {
+            System.assertNotEquals(null, ci.contactId,  'Contact ID should not be null');
+            System.assertNotEquals(null, ci.email,      'Email should not be null');
+            System.assertNotEquals(null, ci.externalId, 'Contact External ID should not be null');
         }
 
-        // Verify database records
-        List<Account> accounts = [SELECT Id, Name, External_ID__c FROM Account WHERE Name = 'Test Account'];
+        List<Account> accounts = [SELECT Id, External_ID__c FROM Account WHERE Name = 'Test Account'];
         System.assertEquals(1, accounts.size(), 'One account should be created');
-        System.assertEquals(result.account.accountId, accounts[0].Id, 'Account IDs should match');
+        System.assertEquals(result.account.accountId,  accounts[0].Id,             'Account IDs should match');
         System.assertEquals(result.account.externalId, accounts[0].External_ID__c, 'External IDs should match');
 
-        List<Contact> createdContacts = [SELECT Id, Email, External_ID__c FROM Contact WHERE AccountId = :accounts[0].Id];
-        System.assertEquals(2, createdContacts.size(), 'Two contacts should be created');
+        List<Contact> contacts = [SELECT Id FROM Contact WHERE AccountId = :accounts[0].Id];
+        System.assertEquals(2, contacts.size(), 'Two contacts should be created');
     }
 
     /**
@@ -95,35 +116,20 @@ private class AccountContactRestServiceTest {
      */
     @isTest
     static void testCreateAccountWithoutContacts_Success() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
-
-        // Prepare request data with only account
-        AccountContactRestService.AccountContactRequest requestData = new AccountContactRestService.AccountContactRequest();
-
-        AccountContactRestService.AccountData accountData = new AccountContactRestService.AccountData();
-        accountData.accountName = 'Solo Account';
-        accountData.phone = '555-9999';
-        requestData.accountData = accountData;
+        TestContextHelper.setupRestContext();
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(requestData);
+        AccountContactRestService.AccountContactResponse result =
+            AccountContactRestService.createAccountContact(buildMinimalRequest('Solo Account'));
         Test.stopTest();
 
-        // Assertions
         System.assertEquals(true, result.success, 'Operation should be successful');
-        System.assertNotEquals(null, result.account, 'Account info should not be null');
         System.assertNotEquals(null, result.account.accountId, 'Account ID should not be null');
         System.assertEquals(0, result.contacts.size(), 'Should have no contacts');
 
-        // Verify database
-        List<Account> accounts = [SELECT Id FROM Account WHERE Name = 'Solo Account'];
-        System.assertEquals(1, accounts.size(), 'One account should be created');
+        System.assertEquals(1,
+            [SELECT COUNT() FROM Account WHERE Name = 'Solo Account'],
+            'One account should be created');
     }
 
     /**
@@ -131,25 +137,17 @@ private class AccountContactRestServiceTest {
      */
     @isTest
     static void testCreateAccount_NullRequestData() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
+        TestContextHelper.setupRestContext();
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(null);
+        AccountContactRestService.AccountContactResponse result =
+            AccountContactRestService.createAccountContact(null);
         Test.stopTest();
 
-        // Assertions
         System.assertEquals(false, result.success, 'Operation should fail');
-        System.assert(result.message.contains('Request data cannot be null'), 'Error message should indicate null request');
-
-        // Verify no records created
-        List<Account> accounts = [SELECT Id FROM Account];
-        System.assertEquals(0, accounts.size(), 'No accounts should be created');
+        System.assert(result.message.contains('Request data cannot be null'),
+            'Error message should indicate null request');
+        System.assertEquals(0, [SELECT COUNT() FROM Account], 'No accounts should be created');
     }
 
     /**
@@ -157,76 +155,49 @@ private class AccountContactRestServiceTest {
      */
     @isTest
     static void testCreateAccount_MissingAccountData() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
-
-        // Create request with null account data
-        AccountContactRestService.AccountContactRequest requestData = new AccountContactRestService.AccountContactRequest();
+        TestContextHelper.setupRestContext();
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(requestData);
+        AccountContactRestService.AccountContactResponse result =
+            AccountContactRestService.createAccountContact(
+                new AccountContactRestService.AccountContactRequest()
+            );
         Test.stopTest();
 
-        // Assertions
         System.assertEquals(false, result.success, 'Operation should fail');
-        System.assert(result.message.contains('Account data is required'), 'Error message should indicate missing account data');
-
-        // Verify no records created
-        List<Account> accounts = [SELECT Id FROM Account];
-        System.assertEquals(0, accounts.size(), 'No accounts should be created');
+        System.assert(result.message.contains('Account data is required'),
+            'Error message should indicate missing account data');
+        System.assertEquals(0, [SELECT COUNT() FROM Account], 'No accounts should be created');
     }
 
     /**
-     * @description Test contact creation failure and account rollback
-     * Note: This test simulates a scenario where contact insertion might fail
+     * @description Test contact creation failure and account rollback.
+     *              Simulates an oversized email to force a DmlException on contacts,
+     *              which should roll back the already-inserted Account.
      */
     @isTest
     static void testCreateAccount_ContactFailureRollback() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
+        TestContextHelper.setupRestContext();
 
-        // Prepare request data
-        AccountContactRestService.AccountContactRequest requestData = new AccountContactRestService.AccountContactRequest();
+        AccountContactRestService.AccountContactRequest req =
+            buildMinimalRequest('Test Rollback Account');
 
-        AccountContactRestService.AccountData accountData = new AccountContactRestService.AccountData();
-        accountData.accountName = 'Test Rollback Account';
-        requestData.accountData = accountData;
-
-        // Create contact with invalid data (missing required LastName will be handled by our code)
-        List<AccountContactRestService.ContactData> contacts = new List<AccountContactRestService.ContactData>();
-        AccountContactRestService.ContactData contact1 = new AccountContactRestService.ContactData();
-        contact1.firstName = 'Test';
-        // Intentionally not setting lastName - but this might not fail in all orgs
-        // So we'll test with email format that's too long
-        contact1.email = 'a'.repeat(80) + '@' + 'b'.repeat(80) + '.com'; // Email too long
-        contacts.add(contact1);
-
-        requestData.contacts = contacts;
+        AccountContactRestService.ContactData badContact = new AccountContactRestService.ContactData();
+        badContact.firstName = 'Test';
+        badContact.email     = 'a'.repeat(80) + '@' + 'b'.repeat(80) + '.com'; // email too long
+        req.contacts = new List<AccountContactRestService.ContactData>{ badContact };
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(requestData);
+        AccountContactRestService.AccountContactResponse result =
+            AccountContactRestService.createAccountContact(req);
         Test.stopTest();
 
-        // The response should indicate failure
         System.assertEquals(false, result.success, 'Operation should fail due to contact error');
 
-        // Verify rollback - no account should be created
-        List<Account> accounts = [SELECT Id FROM Account WHERE Name = 'Test Rollback Account'];
-        System.assertEquals(0, accounts.size(), 'Account should be rolled back');
-
-        // Verify no contacts created
-        List<Contact> createdContacts = [SELECT Id FROM Contact];
-        System.assertEquals(0, createdContacts.size(), 'No contacts should be created');
+        System.assertEquals(0,
+            [SELECT COUNT() FROM Account WHERE Name = 'Test Rollback Account'],
+            'Account should be rolled back');
+        System.assertEquals(0, [SELECT COUNT() FROM Contact], 'No contacts should be created');
     }
 
     /**
@@ -234,50 +205,37 @@ private class AccountContactRestServiceTest {
      */
     @isTest
     static void testResponseStructure() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
+        TestContextHelper.setupRestContext();
 
-        // Prepare minimal request
-        AccountContactRestService.AccountContactRequest requestData = new AccountContactRestService.AccountContactRequest();
+        AccountContactRestService.AccountContactRequest req =
+            buildMinimalRequest('Structure Test Account');
 
-        AccountContactRestService.AccountData accountData = new AccountContactRestService.AccountData();
-        accountData.accountName = 'Structure Test Account';
-        requestData.accountData = accountData;
-
-        List<AccountContactRestService.ContactData> contacts = new List<AccountContactRestService.ContactData>();
-        AccountContactRestService.ContactData contact1 = new AccountContactRestService.ContactData();
-        contact1.firstName = 'Test';
-        contact1.lastName = 'User';
-        contact1.email = 'test@example.com';
-        contacts.add(contact1);
-        requestData.contacts = contacts;
+        AccountContactRestService.ContactData c = new AccountContactRestService.ContactData();
+        c.firstName = 'Test';
+        c.lastName  = 'User';
+        c.email     = 'test@example.com';
+        req.contacts = new List<AccountContactRestService.ContactData>{ c };
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(requestData);
+        AccountContactRestService.AccountContactResponse result =
+            AccountContactRestService.createAccountContact(req);
         Test.stopTest();
 
-        // Verify response structure
         System.assertNotEquals(null, result, 'Response should not be null');
         System.assertEquals(true, result.success, 'Success flag should be true');
         System.assertNotEquals(null, result.message, 'Message should not be null');
 
-        // Verify AccountInfo structure
-        System.assertNotEquals(null, result.account, 'Account should not be null');
-        System.assertNotEquals(null, result.account.accountId, 'Account ID should be populated');
-        System.assertNotEquals(null, result.account.externalId, 'Account External ID should be populated');
+        System.assertNotEquals(null, result.account,             'Account should not be null');
+        System.assertNotEquals(null, result.account.accountId,   'Account ID should be populated');
+        System.assertNotEquals(null, result.account.externalId,  'Account External ID should be populated');
 
-        // Verify ContactInfo structure
         System.assertNotEquals(null, result.contacts, 'Contacts list should not be null');
         System.assertEquals(1, result.contacts.size(), 'Should have one contact');
-        AccountContactRestService.ContactInfo contactInfo = result.contacts[0];
-        System.assertNotEquals(null, contactInfo.contactId, 'Contact ID should be populated');
-        System.assertEquals('test@example.com', contactInfo.email, 'Email should match');
-        System.assertNotEquals(null, contactInfo.externalId, 'Contact External ID should be populated');
+
+        AccountContactRestService.ContactInfo ci = result.contacts[0];
+        System.assertNotEquals(null, ci.contactId,               'Contact ID should be populated');
+        System.assertEquals('test@example.com', ci.email,        'Email should match');
+        System.assertNotEquals(null, ci.externalId,              'Contact External ID should be populated');
     }
 
     /**
@@ -285,55 +243,41 @@ private class AccountContactRestServiceTest {
      */
     @isTest
     static void testCreateContact_AllFields() {
-        // Setup REST context
-        RestRequest request = new RestRequest();
-        RestResponse response = new RestResponse();
-        request.requestURI = '/services/apexrest/api/accountcontact/';
-        request.httpMethod = 'POST';
-        RestContext.request = request;
-        RestContext.response = response;
+        TestContextHelper.setupRestContext();
 
-        // Prepare request with all contact fields
-        AccountContactRestService.AccountContactRequest requestData = new AccountContactRestService.AccountContactRequest();
+        AccountContactRestService.AccountContactRequest req =
+            buildMinimalRequest('Full Fields Account');
 
-        AccountContactRestService.AccountData accountData = new AccountContactRestService.AccountData();
-        accountData.accountName = 'Full Fields Account';
-        requestData.accountData = accountData;
-
-        List<AccountContactRestService.ContactData> contacts = new List<AccountContactRestService.ContactData>();
-        AccountContactRestService.ContactData contact1 = new AccountContactRestService.ContactData();
-        contact1.firstName = 'Complete';
-        contact1.lastName = 'Contact';
-        contact1.email = 'complete@test.com';
-        contact1.phone = '555-1234';
-        contact1.title = 'Manager';
-        contact1.department = 'Sales';
-        contact1.mobilePhone = '555-5678';
-        contact1.isVerified = true;
-        contacts.add(contact1);
-        requestData.contacts = contacts;
+        AccountContactRestService.ContactData c = new AccountContactRestService.ContactData();
+        c.firstName   = 'Complete';
+        c.lastName    = 'Contact';
+        c.email       = 'complete@test.com';
+        c.phone       = '555-1234';
+        c.title       = 'Manager';
+        c.department  = 'Sales';
+        c.mobilePhone = '555-5678';
+        c.isVerified  = true;
+        req.contacts = new List<AccountContactRestService.ContactData>{ c };
 
         Test.startTest();
-        AccountContactRestService.AccountContactResponse result = AccountContactRestService.createAccountContact(requestData);
+        AccountContactRestService.createAccountContact(req);
         Test.stopTest();
 
-        // Verify contact fields
-        List<Contact> createdContacts = [
-            SELECT Id, FirstName, LastName, Email, Phone, Title, Department, MobilePhone, Verified__c, External_ID__c
+        Contact con = [
+            SELECT FirstName, LastName, Email, Phone, Title, Department,
+                   MobilePhone, Verified__c, External_ID__c
             FROM Contact
             WHERE Email = 'complete@test.com'
         ];
 
-        System.assertEquals(1, createdContacts.size(), 'One contact should be created');
-        Contact con = createdContacts[0];
-        System.assertEquals('Complete', con.FirstName, 'First name should match');
-        System.assertEquals('Contact', con.LastName, 'Last name should match');
-        System.assertEquals('complete@test.com', con.Email, 'Email should match');
-        System.assertEquals('555-1234', con.Phone, 'Phone should match');
-        System.assertEquals('Manager', con.Title, 'Title should match');
-        System.assertEquals('Sales', con.Department, 'Department should match');
-        System.assertEquals('555-5678', con.MobilePhone, 'Mobile phone should match');
-        System.assertEquals(true, con.Verified__c, 'Verified should be true');
-        System.assertNotEquals(null, con.External_ID__c, 'External ID should be populated');
+        System.assertEquals('Complete',          con.FirstName,    'First name should match');
+        System.assertEquals('Contact',           con.LastName,     'Last name should match');
+        System.assertEquals('complete@test.com', con.Email,        'Email should match');
+        System.assertEquals('555-1234',          con.Phone,        'Phone should match');
+        System.assertEquals('Manager',           con.Title,        'Title should match');
+        System.assertEquals('Sales',             con.Department,   'Department should match');
+        System.assertEquals('555-5678',          con.MobilePhone,  'Mobile phone should match');
+        System.assertEquals(true,                con.Verified__c,  'Verified should be true');
+        System.assertNotEquals(null,             con.External_ID__c, 'External ID should be populated');
     }
 }
